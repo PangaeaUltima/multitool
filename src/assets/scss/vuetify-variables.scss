@@ -1,0 +1,5 @@
+$main-font-family: "Roboto", sans-serif;
+
+@use 'vuetify' with (
+  $body-font-family: $main-font-family,
+)
