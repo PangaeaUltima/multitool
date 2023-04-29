@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-app-bar-nav-icon class="ml-auto" color="transparent" size="36" @click.stop="appStore.setDrawer(true)" />
+  <v-app-bar-nav-icon class="ml-auto" color="transparent" size="36" flat @click.stop="isDrawerVisible = true" />
   <v-navigation-drawer
     v-model="isDrawerVisible"
     class="bg-secondary-background"
@@ -14,18 +14,16 @@
         Multitool
       </router-link>
       <v-list class="px-0" nav density="compact">
-        <v-list-item-group>
-          <v-list-item
-            v-for="link in navigationLinks"
-            :key="link.title"
-            :to="link.routeName"
-            class="text-white px-3"
-          >
-            <v-list-item-title>
-              {{ link.title }}
-            </v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
+        <v-list-item
+          v-for="link in navigationLinks"
+          :key="link.title"
+          :to="link.routeName"
+          class="text-white px-3"
+        >
+          <v-list-item-title>
+            {{ link.title }}
+          </v-list-item-title>
+        </v-list-item>
       </v-list>
     </div>
   </v-navigation-drawer>
@@ -43,7 +41,7 @@ export default defineComponent({
     const appStore = useAppStore()
     const { mobile } = useDisplay()
 
-    const navigationLinks: { title: string, routeName: string }[] = ref([
+    const navigationLinks: { title: string; routeName: string }[] = [
       {
         title: 'Currency Converter',
         routeName: '/currency-converter',
@@ -52,9 +50,9 @@ export default defineComponent({
         title: 'Historical Data on Currency Rates',
         routeName: '/currency-history',
       },
-    ])
+    ]
 
-    const isDrawerVisible: boolean = computed({
+    const isDrawerVisible = computed({
       get() {
         return appStore.isDrawerVisible
       },

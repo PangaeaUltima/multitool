@@ -15,12 +15,12 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
       },
       {
-        path: 'currency-converter',
+        path: '/currency-converter',
         name: 'CurrencyConverter',
         component: () => import('@/views/CurrencyConverter.vue'),
       },
       {
-        path: 'currency-history',
+        path: '/currency-history',
         name: 'CurrencyHistory',
         component: () => import('@/views/CurrencyHistory.vue'),
       },
@@ -29,7 +29,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory('multitool'),
   routes,
 })
 

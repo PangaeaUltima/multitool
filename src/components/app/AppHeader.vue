@@ -7,7 +7,7 @@
       >
         Multitool
       </router-link>
-      <v-btn color="transparent" class="ml-auto mr-4" icon size="36">
+      <v-btn color="transparent" class="ml-auto mr-4" flat icon size="36">
         <v-icon color="primary" size="24">
           mdi-nintendo-game-boy
         </v-icon>
