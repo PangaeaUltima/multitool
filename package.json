@@ -1,14 +1,17 @@
 {
   "name": "my-project-vue3",
   "version": "0.0.0",
+  "homepage": "https://pangaeaultima.github.io/multitool/",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --fix --ignore-path .gitignore"
+    "lint": "eslint . --fix --ignore-path .gitignore",
+    "deploy": "vite build && gh-pages -d dist"
   },
   "dependencies": {
     "@mdi/font": "7.0.96",
+    "axios": "^1.4.0",
     "pinia": "^2.0.23",
     "roboto-fontface": "*",
     "vue": "^3.2.0",

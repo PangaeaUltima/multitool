@@ -1,5 +1,8 @@
 <template>
 <v-app>
+  <app-cursor-follower v-if="isGameActive" />
+  <transition name="fade" mode="out-in">
+  </transition>
   <div class="fill-height wrapper relative d-flex flex-column">
     <slot />
   </div>
@@ -7,10 +10,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
+import { useAppStore } from '@/store/app'
+import AppCursorFollower from '@/components/app/AppCursorFollower.vue'
 
 export default defineComponent({
   name: 'AppLayout',
+  components: {
+    AppCursorFollower,
+  },
+  setup() {
+    const appStore = useAppStore()
+    // const isGameActive = ref(appStore.isGameActive)
+
+    const isGameActive = computed({
+      get() {
+        return appStore.isGameActive
+      },
+      set() {}
+    })
+
+    return {
+      isGameActive,
+    }
+  }
 })
 </script>
 

@@ -7,31 +7,29 @@
       >
         Multitool
       </router-link>
-      <v-btn color="transparent" class="ml-auto mr-4" flat icon size="36">
-        <v-icon color="primary" size="24">
-          mdi-nintendo-game-boy
-        </v-icon>
-      </v-btn>
+      <app-cursor-follower-control class="ml-auto" />
       <app-navigation />
     </div>
   </header>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue'
 import { useDisplay } from 'vuetify'
+import AppCursorFollowerControl from '@/components/app/AppCursorFollowerControl.vue'
 import AppNavigation from '@/components/app/AppNavigation.vue'
 
 export default defineComponent({
   name: 'AppHeader',
   components: {
+    AppCursorFollowerControl,
     AppNavigation,
   },
   setup() {
     const { mobile } = useDisplay()
 
     return {
-      mobile: ref(mobile)
+      mobile: ref(mobile),
     }
   }
 })
