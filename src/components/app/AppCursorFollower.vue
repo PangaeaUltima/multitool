@@ -27,15 +27,15 @@ export default defineComponent({
     const followerSize: number = 16
     let followerPositionX: Ref<number> = ref(60)
     let followerPositionY: Ref<number> = ref(60)
-    let x: Ref<number> = ref(0)
-    let y: Ref<number> = ref(0)
-    let followerCenterX: Ref<number> = ref(0)
-    let followerCenterY: Ref<number> = ref(0)
-    let directionX: Ref<number> = ref(0)
-    let directionY: Ref<number> = ref(0)
-    let runInterval = ref()
-    let updatePositionInterval = ref()
-    let foodEatingInterval = ref()
+    let x: number = 0
+    let y: number = 0
+    let followerCenterX: number = 0
+    let followerCenterY: number = 0
+    let directionX: number = 0
+    let directionY: number = 0
+    let runInterval: any
+    let updatePositionInterval: any
+    let foodEatingInterval: any
     const layout = ref()
     const follower = ref()
     let food = ref()
@@ -49,9 +49,9 @@ export default defineComponent({
     })
 
     onUnmounted(() => {
-      clearInterval(runInterval.value)
-      clearInterval(updatePositionInterval.value)
-      clearInterval(foodEatingInterval.value)
+      clearInterval(runInterval)
+      clearInterval(updatePositionInterval)
+      clearInterval(foodEatingInterval)
     })
 
     function calcFoodPosition() {
@@ -67,7 +67,7 @@ export default defineComponent({
     function checkFoodMustBeEaten() {
       food.value = document.getElementsByClassName('follower-food')
 
-      foodEatingInterval.value = setInterval(() => {
+      foodEatingInterval = setInterval(() => {
         const rectFollower = follower.value.getBoundingClientRect()
         const rectFood = food.value.getBoundingClientRect()
 
@@ -88,7 +88,7 @@ export default defineComponent({
 
     function eatFood() {
       appStore.setEatenFoodCounter(appStore.eatenFoodCounter + 1)
-      clearInterval(foodEatingInterval.value)
+      clearInterval(foodEatingInterval)
       calcFoodPosition()
     }
 
@@ -96,8 +96,8 @@ export default defineComponent({
       window.addEventListener('mousemove', (e) => {
         const { clientX, clientY } = e
 
-        x.value = clientX
-        y.value = clientY
+        x = clientX
+        y = clientY
       })
     }
 
@@ -107,34 +107,34 @@ export default defineComponent({
       followerPositionX.value = window.innerWidth * 0.9
       followerPositionY.value = window.innerHeight * 0.5
 
-      runInterval.value = setInterval(() => {
+      runInterval = setInterval(() => {
         const { offsetLeft, offsetTop } = follower.value
-        followerCenterX.value = offsetLeft + followerSize / 2
-        followerCenterY.value = offsetTop + followerSize / 2
-        const followerGotMouse: boolean = followerCenterX.value === x.value && followerCenterY.value === y.value
+        followerCenterX = offsetLeft + followerSize / 2
+        followerCenterY = offsetTop + followerSize / 2
+        const followerGotMouse: boolean = followerCenterX === x && followerCenterY=== y
 
         if (!followerGotMouse) {
           if (followerCenterX !== x)
-            followerPositionX.value = Math.round(+followerPositionX.value + directionX.value)
+            followerPositionX.value = Math.round(+followerPositionX.value + directionX)
           if (followerCenterY !== y)
-            followerPositionY.value = Math.round(+followerPositionY.value + directionY.value)
+            followerPositionY.value = Math.round(+followerPositionY.value + directionY)
         }
       }, 1)
     }
 
     function updatePositionData() {
-      updatePositionInterval.value = setInterval(() => {
+      updatePositionInterval = setInterval(() => {
         const { offsetLeft, offsetTop } = follower.value
 
-        followerCenterX.value = offsetLeft + followerSize / 2
-        followerCenterY.value = offsetTop + followerSize / 2
+        followerCenterX = offsetLeft + followerSize / 2
+        followerCenterY = offsetTop + followerSize / 2
         const { mouseTop, mouseLeft } = {
-          mouseTop: y.value < followerCenterY.value,
-          mouseLeft: x.value < followerCenterX.value,
+          mouseTop: y < followerCenterY,
+          mouseLeft: x < followerCenterX,
         }
 
-        directionX.value = mouseLeft ? -1 : 1
-        directionY.value = mouseTop ? -1 : 1
+        directionX = mouseLeft ? -1 : 1
+        directionY = mouseTop ? -1 : 1
       }, 1)
     }
 
